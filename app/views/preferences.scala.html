@@ -1,0 +1,33 @@
+@(preferences: List[Preferences], preferenceForm: Form[Preferences])
+
+@import helper._
+
+@main("Todo list") {
+
+    <h1>@preferences.size preference(s)</h1>
+
+    <ul>
+    @for(preference <- preferences) {
+        <li>
+            @preference.jour
+
+            @form(routes.PreferenceController.delete(preference.idPreference)) {
+                <input type="submit" value="Delete">
+                }
+        </li>
+    }
+    </ul>
+
+    <h2>Add a new task</h2>
+
+    @form(routes.PreferenceController.add()) {
+
+        @inputText(preferenceForm("jour"))
+        @inputText(preferenceForm("cre"))
+        @inputText(preferenceForm("valide"))
+
+        <input type="submit" value="Create">
+
+    }
+
+}
