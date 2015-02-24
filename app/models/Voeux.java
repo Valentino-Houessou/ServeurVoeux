@@ -4,6 +4,7 @@ import javax.persistence.*;
 import play.db.ebean.*;
 import com.avaje.ebean.*;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,6 +22,7 @@ public class Voeux extends Model {
     public Double volume_horaire_cours_assure;
     public boolean priorite;
     public Double volume_horaire_TD_assure;
+    public Date date;
     @ManyToOne
     public Utilisateurs ref_utilisateurs;
     public Validation valide;
@@ -36,6 +38,7 @@ public class Voeux extends Model {
         this.volume_horaire_TD_assure = volume_horaire_TD_assure;
         this.valide = Validation.ATTENTE;
         this.ref_utilisateurs = ref_utilisateurs;
+        this.date = new java.util.Date();
     }
 
     public static Finder<Long,Voeux> find = new Finder<Long,Voeux>(

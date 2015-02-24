@@ -3,6 +3,7 @@ package models;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class Preferences extends Model {
     public Utilisateurs ref_utilisateurs;
     //Variable permettant de juger de l'état d'une préférences
     public Validation valide;
+    public Date date;
 
     public static List<Preferences> all() {
         return new ArrayList<Preferences>();
@@ -37,6 +39,7 @@ public class Preferences extends Model {
         this.jour = jour;
         this.valide = Validation.ATTENTE;
         this.ref_utilisateurs = ref_utilisateurs;
+        this.date = new java.util.Date();
     }
 
     public static Finder<Long,Preferences> find = new Finder<Long,Preferences>(
