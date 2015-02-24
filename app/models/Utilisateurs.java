@@ -47,4 +47,32 @@ public class Utilisateurs extends Model {
             Long.class, Utilisateurs.class
     );
 
+    public static Utilisateurs create(String nom, String prenom,
+                                      String email, String telephone,String adresse,
+                                      String mdp, Poste poste, ArrayList<Profil> profil) {
+        Utilisateurs user = new Utilisateurs(nom, prenom, email, telephone, adresse,
+                                               mdp, poste, profil);
+        user.save();
+        return user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Utilisateurs)) return false;
+        if (!super.equals(o)) return false;
+
+        Utilisateurs that = (Utilisateurs) o;
+
+        if (id_utilisateur != that.id_utilisateur) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (int) (id_utilisateur ^ (id_utilisateur >>> 32));
+        return result;
+    }
 }

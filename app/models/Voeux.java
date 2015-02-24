@@ -48,8 +48,8 @@ public class Voeux extends Model {
         Voeux voeux = new Voeux(libelle_voeux, commentaire, EC.find.ref(ref_ec),
                                 volume_horaire_cours_assure, priorite,volume_horaire_TD_assure,
                                 Utilisateurs.find.ref(ref_utilisateurs));
-        Utilisateurs.find.ref(ref_utilisateurs).list_voeux.add(voeux);
         voeux.save();
+        //Utilisateurs.find.ref(ref_utilisateurs).list_voeux.add(voeux);
         return voeux;
     }
 

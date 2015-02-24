@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 import play.test.WithApplication;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static play.test.Helpers.*;
 
@@ -15,42 +16,63 @@ import static play.test.Helpers.*;
 public class ModelsTest extends WithApplication {
 
     @Test
+    public void createUtilisateurs() {
+        ArrayList<Profil> prof = new  ArrayList<Profil>();
+        prof.add(Profil.ADMINISTRATEUR);
+        prof.add(Profil.ENSEIGNANT);
+
+        Utilisateurs userz = Utilisateurs.create("Jabea", "Andy",
+                "bryan.jabea@gmail.com", "0615142697","Rue du Rhum 77 Combs La ville",
+                "BryJab", Poste.PROFESSEUR, prof);
+        userz.save();
+
+        Utilisateurs user = Utilisateurs.find.where().eq("id_Utilisateur", new Long(1)).findUnique();
+        assertNotNull(user);
+        assertEquals("bryan.jabea@gmail.com", user.email);
+        assertEquals(userz, Utilisateurs.find.ref(userz.id_utilisateur));
+    }
+
+    @Test
     public void createAndRetrievePreferences() {
         ArrayList<Profil> prof = new  ArrayList<Profil>();
         prof.add(Profil.ADMINISTRATEUR);
         prof.add(Profil.ENSEIGNANT);
 
-        Utilisateurs userz = new Utilisateurs("Jabea", "Andy",
-                "bryan.jabea@gmail.com", "0664622523","Rue de la JAbCorp 92 Boulogne",
-                "BryJab", Poste.PROFESSEUR, prof);
+        Utilisateurs userz = Utilisateurs.create("Dunnoyer", "Yoan",
+                "yoan.dunnoyer@gmail.com", "0664622523","Rue de la JAbCorp 92 Boulogne",
+                "YoaDun", Poste.MAITRE_DE_CONFERENCE, prof);
         userz.save();
 
-        new Preferences(new  Creneau(), "Lundi",userz).save();
+        Preferences pp = Preferences.create(new  Creneau(), "Lundi",userz.id_utilisateur);
+        pp.save();
         Preferences p = Preferences.find.where().eq("idPreference", new Long(1)).findUnique();
         assertNotNull(p);
-        assertEquals("Lundi", p.jour);
+        assertEquals(userz.id_utilisateur, p.ref_utilisateurs.id_utilisateur);
+        assertEquals(pp.idPreference, p.idPreference);
     }
 
     @Test
     public void findPreferencesInvolving() {
-        /*User bob = new User("bob@gmail.com", "Bob", "secret");
-        bob.save();
+        ArrayList<Profil> prof = new  ArrayList<Profil>();
+        prof.add(Profil.ADMINISTRATEUR);
+        prof.add(Profil.ENSEIGNANT);
 
-        Project project = Project.create("Play 2", "play", "bob@gmail.com");
-        Task t1 = new Task();
-        t1.title = "Write tutorial";
-        t1.assignedTo = bob;
-        t1.done = true;
-        t1.save();
+        Utilisateurs userz = new Utilisateurs("Kadri", "Saadi",
+                "saadi.kadri@gmail.com", "0658512523","Rue de Bejaia 91 Bretigny",
+                "SaaKad", Poste.DOCTORANT, prof);
+        userz.save();
 
-        Task t2 = new Task();
-        t2.title = "Release next version";
-        t2.project = project;
-        t2.save();
+        Preferences pref1 = Preferences.create(new Creneau(),"Mardi",userz.id_utilisateur);
+        pref1.save();
 
-        List<Task> results = Task.findTodoInvolving("bob@gmail.com");
-        assertEquals(1, results.size());
-        assertEquals("Release next version", results.get(0).title);*/
+        Preferences pref2 = Preferences.create(new Creneau(),"Mercredi",userz.id_utilisateur);
+        pref2.save();
+
+        assertNotNull(pref1);
+        assertNotNull(pref2);
+
+        List<Preferences> results = Preferences.findInvolving(userz.id_utilisateur);
+        assertEquals(2, results.size());
     }
 
 }

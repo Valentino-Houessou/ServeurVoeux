@@ -24,14 +24,9 @@ public class Preferences extends Model {
     public Utilisateurs ref_utilisateurs;
     //Variable permettant de juger de l'état d'une préférences
     public Validation valide;
-    public Preferences() {
 
-    }
     public static List<Preferences> all() {
         return new ArrayList<Preferences>();
-    }
-
-    public static void create(Preferences p) {
     }
 
     public static void delete(Long id) {
@@ -48,16 +43,15 @@ public class Preferences extends Model {
             Long.class, Preferences.class
     );
 
-    public static Preferences create(Creneau cre, String jour, Long ref_utilisateurs) {
-        Preferences pref = new Preferences(cre, jour, Utilisateurs.find.ref(ref_utilisateurs));
-        Utilisateurs.find.ref(ref_utilisateurs).contraintes.add(pref);
+    public static Preferences create(Creneau cre, String jour, Long ref_ut) {
+        Preferences pref = new Preferences(cre, jour, Utilisateurs.find.ref(ref_ut));
         pref.save();
         return pref;
     }
 
-    public static List<Preferences> findInvolving(Long utilisateurs) {
-        return find.fetch("ref_Utilisateurs").where()
-                .eq("ref_Utilisateurs.id_Utilisateurs", utilisateurs)
+    public static List<Preferences> findInvolving(Long ut) {
+        return find.fetch("ref_utilisateurs").where()
+                .eq("ref_utilisateurs.id_utilisateur", ut)
                 .findList();
     }
 
