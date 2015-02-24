@@ -9,10 +9,10 @@ GET            /ServeurDeVoeux                                                  
 GET            /ServeurDeVoeux/preference/                                          controllers.PreferenceController.index()
 POST          /ServeurDeVoeux/preference/ajouter                                    controllers.PreferenceController.add()
 DELETE        /ServeurDeVoeux/preference/suppression/:preference                    controllers.PreferenceController.delete(preference: Long)
-#PUT           /ServeurDeVoeux/preference/modifier/:preference                       controllers.PreferenceController.update(preference: String)
-#GET           /ServeurDeVoeux/preference/enseignant/:id                             controllers.PreferenceController.getPreferenceEnseignant(id : String)
-#GET           /ServeurDeVoeux/preference/enseignant/:id/historique/$annee<[0-9]4>   controllers.PreferenceController.historiquePreferenceEnseignant(id : String, annee : Long)
-#GET           /ServeurDeVoeux/preference/filiere/:id                                controllers.PreferenceController.PreferenceFiliere(id : String)
+PUT           /ServeurDeVoeux/preference/modifier/:preference                       controllers.PreferenceController.update(preference: Long)
+GET           /ServeurDeVoeux/preference/enseignant/:id                             controllers.PreferenceController.getPreferenceEnseignant(id : Long)
+GET           /ServeurDeVoeux/preference/enseignant/:id/historique/$annee<[0-9]4>   controllers.PreferenceController.historiquePreferenceEnseignant(id : Long, annee : Long)
+GET           /ServeurDeVoeux/preference/filiere/:id                                controllers.PreferenceController.PreferenceFiliere(id : Long)
 
 
 

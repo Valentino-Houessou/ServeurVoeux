@@ -25,6 +25,20 @@ public class PreferenceController extends Controller {
         return TODO;
     }
 
+    public static Result update(Long id){return TODO;}
+
+    public static Result getPreferenceEnseignant(Long id){
+        return TODO;
+    }
+
+    public static Result historiquePreferenceEnseignant(Long id, Long annee){
+        return TODO;
+    }
+
+    public static Result PreferenceFiliere(Long id){
+        return TODO;
+    }
+
     /*public static Result add() {
 
         Project newProject = Project.create("New project", dynForm.bindFromRequest().get("folder"), request().username());
