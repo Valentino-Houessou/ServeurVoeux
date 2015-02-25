@@ -16,6 +16,8 @@ create table preferences (
   jour                      varchar(255),
   ref_utilisateurs_id_utilisateur bigint,
   valide                    integer,
+  date                      date,
+  year                      integer,
   constraint ck_preferences_valide check (valide in (0,1,2)),
   constraint pk_preferences primary key (id_preference))
 ;
@@ -40,6 +42,7 @@ create table voeux (
   volume_horaire_cours_assure double,
   priorite                  boolean,
   volume_horaire_td_assure  double,
+  date                      timestamp,
   ref_utilisateurs_id_utilisateur bigint,
   valide                    integer,
   constraint ck_voeux_valide check (valide in (0,1,2)),

@@ -31,7 +31,7 @@ public class PreferenceController extends Controller {
         return TODO;
     }
 
-    public static Result historiquePreferenceEnseignant(Long id, Long annee){
+    public static Result historiquePreferenceEnseignant(Long id, int annee){
         return TODO;
     }
 

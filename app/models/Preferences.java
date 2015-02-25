@@ -3,6 +3,7 @@ package models;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,8 @@ public class Preferences extends Model {
     public Utilisateurs ref_utilisateurs;
     //Variable permettant de juger de l'état d'une préférences
     public Validation valide;
-    public Date date;
+    public java.sql.Date date;
+    public int year;
 
     public static List<Preferences> all() {
         return new ArrayList<Preferences>();
@@ -39,7 +41,9 @@ public class Preferences extends Model {
         this.jour = jour;
         this.valide = Validation.ATTENTE;
         this.ref_utilisateurs = ref_utilisateurs;
-        this.date = new java.util.Date();
+        this.date = new java.sql.Date((new java.util.Date()).getTime());
+        Calendar calendar = Calendar.getInstance();
+        this.year = calendar.get( Calendar.YEAR );
     }
 
     public static Finder<Long,Preferences> find = new Finder<Long,Preferences>(
@@ -53,7 +57,10 @@ public class Preferences extends Model {
     }
 
     public static List<Preferences> findInvolving(Long ut) {
+        Calendar c = Calendar.getInstance();
+        int tYear = c.get(Calendar.YEAR);
         return find.fetch("ref_utilisateurs").where()
+                .eq("year",tYear)
                 .eq("ref_utilisateurs.id_utilisateur", ut)
                 .findList();
     }
