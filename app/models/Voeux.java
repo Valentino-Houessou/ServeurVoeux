@@ -4,6 +4,7 @@ import javax.persistence.*;
 import play.db.ebean.*;
 import com.avaje.ebean.*;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +23,8 @@ public class Voeux extends Model {
     public Double volume_horaire_cours_assure;
     public boolean priorite;
     public Double volume_horaire_TD_assure;
-    public Date date;
+    public java.sql.Date date;
+    public int year;
     @ManyToOne
     public Utilisateurs ref_utilisateurs;
     public Validation valide;
@@ -38,7 +40,9 @@ public class Voeux extends Model {
         this.volume_horaire_TD_assure = volume_horaire_TD_assure;
         this.valide = Validation.ATTENTE;
         this.ref_utilisateurs = ref_utilisateurs;
-        this.date = new java.util.Date();
+        this.date = new java.sql.Date((new java.util.Date()).getTime());
+        Calendar calendar = Calendar.getInstance();
+        this.year = calendar.get( Calendar.YEAR );
     }
 
     public static Finder<Long,Voeux> find = new Finder<Long,Voeux>(
@@ -57,7 +61,10 @@ public class Voeux extends Model {
     }
 
     public static List<Voeux> findTodoInvolving(Long utilisateurs) {
+        Calendar c = Calendar.getInstance();
+        int tYear = c.get(Calendar.YEAR);
         return find.fetch("ref_Utilisateurs").where()
+                .eq("year",tYear)
                 .eq("ref_Utilisateurs.id_Utilisateurs", utilisateurs)
                 .findList();
     }
