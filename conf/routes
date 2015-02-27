@@ -3,19 +3,20 @@
 # ~~~~
 
 # Home page
-GET            /ServeurDeVoeux                                                      controllers.Application.index()
+GET           /ServeurDeVoeux                                                            controllers.Application.index()
 
 #Preference
-GET            /ServeurDeVoeux/preference/                                          controllers.PreferenceController.index()
-POST          /ServeurDeVoeux/preference/ajouter                                    controllers.PreferenceController.add()
-DELETE        /ServeurDeVoeux/preference/suppression/:preference                    controllers.PreferenceController.delete(preference: Long)
-PUT           /ServeurDeVoeux/preference/modifier/:preference                       controllers.PreferenceController.update(preference: Long)
-GET           /ServeurDeVoeux/preference/enseignant/:id                             controllers.PreferenceController.getPreferenceEnseignant(id : Long)
-GET           /ServeurDeVoeux/preference/enseignant/:id/historique/$annee<[0-9]4>   controllers.PreferenceController.historiquePreferenceEnseignant(id : Long, annee : int)
-GET           /ServeurDeVoeux/preference/filiere/:id                                controllers.PreferenceController.PreferenceFiliere(id : Long)
+GET           /ServeurDeVoeux/preference/                                                controllers.PreferenceController.index()
+POST          /ServeurDeVoeux/preference/ajouter                                         controllers.PreferenceController.add()
+DELETE        /ServeurDeVoeux/preference/suppression/:preference                         controllers.PreferenceController.delete(preference: Long)
+PUT           /ServeurDeVoeux/preference/modifier/:preference                            controllers.PreferenceController.update(preference: Long)
+GET           /ServeurDeVoeux/preference/enseignant/                                     controllers.PreferenceController.getPreferenceEnseignantCourant()
+GET           /ServeurDeVoeux/preference/enseignant/:id                                  controllers.PreferenceController.getPreferenceEnseignant(id : Long)
+GET           /ServeurDeVoeux/preference/enseignant/:id/historique/$annee<[0-9]4>        controllers.PreferenceController.historiquePreferenceEnseignant(id : Long, annee : Long)
+GET           /ServeurDeVoeux/preference/filiere/:id                                     controllers.PreferenceController.PreferenceFiliere(id : Long)
 
 
 
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET           /assets/*file                                                              controllers.Assets.at(path="/public", file)

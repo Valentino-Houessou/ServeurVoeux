@@ -18,14 +18,12 @@ public class Preferences extends Model {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     public long idPreference;
     //la date du jour
-    public String jour;
+    public java.sql.Date jour;
     //Variable permettant de choisir les créneaux d'une journée
     public Creneau cre;
     //Utilisateur quià créé le voeux
     @ManyToOne
     public Utilisateurs ref_utilisateurs;
-    //Variable permettant de juger de l'état d'une préférences
-    public Validation valide;
     public java.sql.Date date;
     public int year;
 
@@ -36,10 +34,9 @@ public class Preferences extends Model {
     public static void delete(Long id) {
     }
 
-    public Preferences(Creneau cre, String jour, Utilisateurs ref_utilisateurs) {
+    public Preferences(Creneau cre, java.sql.Date jour, Utilisateurs ref_utilisateurs) {
         this.cre = cre;
         this.jour = jour;
-        this.valide = Validation.ATTENTE;
         this.ref_utilisateurs = ref_utilisateurs;
         this.date = new java.sql.Date((new java.util.Date()).getTime());
         Calendar calendar = Calendar.getInstance();
@@ -50,7 +47,7 @@ public class Preferences extends Model {
             Long.class, Preferences.class
     );
 
-    public static Preferences create(Creneau cre, String jour, Long ref_ut) {
+    public static Preferences create(Creneau cre, java.sql.Date jour, Long ref_ut) {
         Preferences pref = new Preferences(cre, jour, Utilisateurs.find.ref(ref_ut));
         pref.save();
         return pref;
@@ -63,6 +60,13 @@ public class Preferences extends Model {
                 .eq("year",tYear)
                 .eq("ref_utilisateurs.id_utilisateur", ut)
                 .findList();
+    }
+
+    public static boolean isMember(Long preference, long user) {
+        return find.where()
+                .eq("ref_utilisateurs.id_utilisateur", user)
+                .eq("idPreference", preference)
+                .findRowCount() > 0;
     }
 
 }

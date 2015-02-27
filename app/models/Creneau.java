@@ -7,14 +7,17 @@ import play.db.ebean.Model;
  */
 public class Creneau extends Model {
 
-    public Creneau() {
-        this.creneau_1 = false;
-        this.creneau_2 = false;
-        this.creneau_3 = false;
-        this.creneau_4 = false;
-    }
+
     //créneau à 1 créneau occupé, créneau à 2 créneau libre
     public boolean creneau_1;
+
+    public Creneau(boolean creneau_1, boolean creneau_2, boolean creneau_3, boolean creneau_4) {
+        this.creneau_1 = creneau_1;
+        this.creneau_2 = creneau_2;
+        this.creneau_3 = creneau_3;
+        this.creneau_4 = creneau_4;
+    }
+
     public boolean creneau_2;
     public boolean creneau_3;
     public boolean creneau_4;

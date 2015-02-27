@@ -13,12 +13,10 @@ create table ec (
 
 create table preferences (
   id_preference             bigint auto_increment not null,
-  jour                      varchar(255),
+  jour                      date,
   ref_utilisateurs_id_utilisateur bigint,
-  valide                    integer,
   date                      date,
   year                      integer,
-  constraint ck_preferences_valide check (valide in (0,1,2)),
   constraint pk_preferences primary key (id_preference))
 ;
 
@@ -42,7 +40,8 @@ create table voeux (
   volume_horaire_cours_assure double,
   priorite                  boolean,
   volume_horaire_td_assure  double,
-  date                      timestamp,
+  date                      date,
+  year                      integer,
   ref_utilisateurs_id_utilisateur bigint,
   valide                    integer,
   constraint ck_voeux_valide check (valide in (0,1,2)),
